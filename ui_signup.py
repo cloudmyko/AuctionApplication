@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow,
 
 import sqlite3 as sq
 from ui_search import Ui_HomePage as hp
+import hashlib
 
 class Ui_SignupPage(object):
     
@@ -237,9 +238,9 @@ class Ui_SignupPage(object):
 
         user = str(self.enterUsername.text())
         password = str(self.enterPassword.text())
-        email = (self.enterEmail.text())
-        fname = (self.enterFirst.text())
-        lname = (self.enterLast.text())
+        email = str(self.enterEmail.text())
+        fname = str(self.enterFirst.text())
+        lname = str(self.enterLast.text())
         val = None
         self.hashPass(password)
 
@@ -254,7 +255,11 @@ class Ui_SignupPage(object):
         
 
     def hashPass(self, password):
-        pass
+        password = str(password)
+        hashObject = hashlib.sha256(password.encode('utf-8'))
+        hexDigit = hashObject.hexdigest()
+
+        return hexDigit
 
         
 
