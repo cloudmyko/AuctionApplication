@@ -23,6 +23,7 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow,
 import sqlite3 as sqlite
 from ui_search import Ui_HomePage as hp
 from ui_signup import Ui_SignupPage as sp
+import hashlib
 
 class Ui_LoginPage(object):
     
@@ -168,6 +169,14 @@ class Ui_LoginPage(object):
     def checkLogin(self):
         return self.loggedIn
     
+    def verifyHash(self, password, retrieved):
+        retrieved = str(retrieved)
+        passToVerify = hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+        if retrieved == passToVerify:
+            return True
+        else:
+            return False
 
 
 
