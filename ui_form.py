@@ -28,6 +28,7 @@ import hashlib
 class Ui_LoginPage(object):
     
     def showNext(self):
+        # opens the home page when called.
         self.window = QMainWindow()
         self.ui = hp()
         self.ui.setupUi(self.window)
@@ -35,12 +36,14 @@ class Ui_LoginPage(object):
 
 
     def showSignup(self):
+        # shows the signup page of the program when called
         self.window = QMainWindow()
         self.ui = sp()
         self.ui.setupUi(self.window)
         self.window.show()
 
     def setupUi(self, LoginPage):
+        # sets up the moving parts for the page
         if not LoginPage.objectName():
             LoginPage.setObjectName(u"LoginPage")
         LoginPage.resize(800, 600)
@@ -152,6 +155,7 @@ class Ui_LoginPage(object):
         curs.close()
 
     def login(self):
+        # logs the user into the database if the username and password matches the ones in the database.
         self.loadDb()
         username = self.enterUser.text()
         password = self.enterPass.text()
