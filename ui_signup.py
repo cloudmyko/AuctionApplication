@@ -21,9 +21,17 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow,
     QStatusBar, QWidget)
 
 import sqlite3 as sq
+from ui_search import Ui_HomePage as hp
 
 class Ui_SignupPage(object):
     
+
+    def showNext(self):
+        self.window = QMainWindow()
+        self.ui = hp()
+        self.ui.setupUi(self.window)
+        self.window.show()
+
     def setupUi(self, SignupPage):
         global signedUp; signedUp = False
         if not SignupPage.objectName():
@@ -180,7 +188,9 @@ class Ui_SignupPage(object):
         password = self.enterEmail.text()
 
         if self.dbCheck(username, password) == True:
-            print("signing you up")
+            if self.errorCheck() == True:
+                self.signUp()
+            
         else:
             print("not signing you up")
     
@@ -204,11 +214,11 @@ class Ui_SignupPage(object):
                 break
                 
 
-        while not checked:
-            if (username >= 6 and password >= 8) and present == True:
+        if not checked:
+            if (len(username) >= 6 and len(password) >= 8) and present == False:
                 print("signing you up")
                 checked = True
-            elif (username < 6 or password < 8):
+            elif (len(username) < 6 or len(password) < 8):
                 print("your password/username isn't long enough\nusername min. 6 chars\npassword min. 8 chars ")
                 self.enterPassword.clear()
                 self.retypePassword.clear()
@@ -217,9 +227,34 @@ class Ui_SignupPage(object):
                 self.enterPassword.clear()
                 self.retypePassword.clear()
 
+        return checked
             
 
+    def signUp(self):
 
+        conn = sq.connect('auctionhouse.db')
+        c = conn.cursor()
+
+        user = str(self.enterUsername.text())
+        password = str(self.enterPassword.text())
+        email = (self.enterEmail.text())
+        fname = (self.enterFirst.text())
+        lname = (self.enterLast.text())
+        val = None
+        self.hashPass(password)
+
+
+        sql = "INSERT INTO Users (Fname, Lname, Email, Username, Password) VALUES ('" + fname + "', '" + lname + "', '" + email + "', '" + user + "', '" + password + "');"
+        sql = str(sql)
+        c.execute(sql)
+        conn.commit()
+
+        self.showNext()
+
+        
+
+    def hashPass(self, password):
+        pass
 
         
 
