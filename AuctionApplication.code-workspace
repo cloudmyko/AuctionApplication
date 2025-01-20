@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "AuctionApplication",
+			"path": "."
+		},
+		{
+			"name": "algorithms",
+			"path": "../algorithms"
+		}
+	],
+	"settings": {}
+}
