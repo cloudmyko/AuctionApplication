@@ -28,12 +28,14 @@ class Ui_SignupPage(object):
     
 
     def showNext(self):
+        # shows the next window when called
         self.window = QMainWindow()
         self.ui = hp()
         self.ui.setupUi(self.window)
         self.window.show()
-
+    
     def setupUi(self, SignupPage):
+        # sets up all the moving parts within the graphical user interface
         global signedUp; signedUp = False
         if not SignupPage.objectName():
             SignupPage.setObjectName(u"SignupPage")
@@ -165,9 +167,11 @@ class Ui_SignupPage(object):
     # cant have a password shorter than 8 chars
     # cant have a username shorter than 6 chars
     def dbCheck(self, username, email):
+        # checks if the inputted username and email are unique within the database
 
         conn = sq.connect('auctionhouse.db')
         curs = conn.cursor()
+        
 
         sql = 'SELECT Username, Email FROM Users'
 
@@ -232,7 +236,7 @@ class Ui_SignupPage(object):
             
 
     def signUp(self):
-
+        # enters the users data into the database, signing them up
         conn = sq.connect('auctionhouse.db')
         c = conn.cursor()
 
@@ -242,7 +246,7 @@ class Ui_SignupPage(object):
         fname = str(self.enterFirst.text())
         lname = str(self.enterLast.text())
         val = None
-        self.hashPass(password)
+        password = str(self.hashPass(password))
 
 
         sql = "INSERT INTO Users (Fname, Lname, Email, Username, Password) VALUES ('" + fname + "', '" + lname + "', '" + email + "', '" + user + "', '" + password + "');"
