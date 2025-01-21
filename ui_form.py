@@ -159,25 +159,16 @@ class Ui_LoginPage(object):
         self.loadDb()
         username = self.enterUser.text()
         password = self.enterPass.text()
+        passToVerify = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
         for i in range(len(elements)):
-            auth = username + password
+            auth = username + passToVerify
             if auth == elements[i]:
                 print("logged in")
                 self.loggedIn = True
                 self.showNext()
                 
-                
                 break
-    
-    def verifyHash(self, password, retrieved):
-        retrieved = str(retrieved)
-        passToVerify = hashlib.sha256(password.encode('utf-8')).hexdigest()
-
-        if retrieved == passToVerify:
-            return True
-        else:
-            return False
 
 
 

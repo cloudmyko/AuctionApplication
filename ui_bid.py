@@ -70,7 +70,8 @@ class Ui_BidPage(object):
         self.retranslateUi(BidPage)
 
         QMetaObject.connectSlotsByName(BidPage)
-    # setupUi
+    # setupUi 
+        
 
     def retranslateUi(self, BidPage):
         BidPage.setWindowTitle(QCoreApplication.translate("BidPage", u"BidPage", None))
@@ -85,3 +86,119 @@ class Ui_BidPage(object):
         self.menuStaff_Login.setTitle(QCoreApplication.translate("BidPage", u"Staff Login", None))
     # retranslateUi
 
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class linkedList:
+    def __init__(self):
+        self.head = None
+
+    def insertAtStart(self, data):
+        newNode = Node(data)
+        if self.head is None:
+            self.head = newNode
+            return
+        else:
+            newNode.next = self.head
+            self.head = newNode
+
+    def insertAtIndex(self, data, index):
+        if (index == 0):
+            self.insertAtBegin(data)
+            return
+        
+        position = 0
+        currentNode = self.head
+        while (currentNode != None and position+1 != index):
+            position += 1
+            currentNode = currentNode.next
+
+        if currentNode != None:
+            newNode = Node(data)
+            newNode.next = currentNode.next
+        else:
+            print("index doesnt exist")
+
+    def insertAtEnd(self,data):
+        newNode = Node(data)
+        if self.head is None:
+            self.head = newNode
+            return
+        
+        currentNode = self.head
+        while (currentNode.next):
+            currentNode = currentNode.next
+
+        currentNode.next = newNode
+
+    def updateNode(self, val, index):
+        currentNode = self.head
+        pos = 0
+        if pos == index:
+            currentNode.data = val
+        else:
+            while (currentNode != None and pos != index):
+                pos += 1
+                currentNode = currentNode.next
+
+            if currentNode != None:
+                currentNode.data = val
+            else:
+                print("index, item dont exist")
+    
+    def removeFirst(self):
+        if (self.head == None):
+            return
+        
+        self.head = self.head.next
+
+    def removeLast(self):
+        if self.head == None:
+            return
+        
+        checkNode = self.head
+        while (checkNode.next != None and checkNode.next.next != None):
+            checkNode = checkNode.next
+
+        checkNode.next = None
+
+    def removeData(self, data):
+        currentNode = self.head
+
+        if currentNode.data == data:
+            self.removeFirst()
+            return
+        
+        while currentNode is not None and currentNode.next.data != data:
+            currentNode = currentNode.next
+
+        if currentNode is None:
+            return
+        else:
+            currentNode.next = currentNode.next.next
+
+    def traversal(self):
+        currentNode = self.head
+        while currentNode:
+            print(currentNode.data)
+            currentNode = currentNode.next
+
+    def sizeCheck(self):
+        size = 0
+        if self.head:
+            currentNode = self.head
+            while currentNode:
+                size += 1
+                currentNode = currentNode.next
+            return size
+        else:
+            return 0
+
+    def initImages(self):
+        slideshow = linkedList()
+        self.insertAtEnd()
+
+
+        
