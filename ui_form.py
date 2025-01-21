@@ -130,7 +130,7 @@ class Ui_LoginPage(object):
         print(self.lineEdit.text())
         print(self.enterPass.text())
         self.enterPass.clear()
-
+        # delete procedure once everything is complete
         # takes the user input within the line edit and outputs it, then clears the password line edit so the user can retype if they have to.
 
     def loadDb(self):
@@ -169,9 +169,6 @@ class Ui_LoginPage(object):
                 
                 
                 break
-
-    def checkLogin(self):
-        return self.loggedIn
     
     def verifyHash(self, password, retrieved):
         retrieved = str(retrieved)
