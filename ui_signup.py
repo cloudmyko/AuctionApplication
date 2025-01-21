@@ -26,7 +26,6 @@ import hashlib
 
 class Ui_SignupPage(object):
     
-
     def showNext(self):
         # shows the next window when called
         self.window = QMainWindow()
@@ -161,9 +160,6 @@ class Ui_SignupPage(object):
 
         # clears the password incase the user inputted passwords dont match
 
-
-
-
     # cant have a password shorter than 8 chars
     # cant have a username shorter than 6 chars
     def dbCheck(self, username, email):
@@ -172,12 +168,10 @@ class Ui_SignupPage(object):
         conn = sq.connect('auctionhouse.db')
         curs = conn.cursor()
         
-
         sql = 'SELECT Username, Email FROM Users'
 
         curs.execute(sql)
         allEntries = curs.fetchall()
-
 
         for i in range(len(allEntries)):
             if (username + email) == ''.join(allEntries[i]):
@@ -195,7 +189,6 @@ class Ui_SignupPage(object):
         if self.dbCheck(username, password) == True:
             if self.errorCheck() == True:
                 self.signUp()
-            
         else:
             print("not signing you up")
     
@@ -218,7 +211,6 @@ class Ui_SignupPage(object):
                 present = True
                 break
                 
-
         if not checked:
             if (len(username) >= 6 and len(password) >= 8) and present == False:
                 print("signing you up")
@@ -233,7 +225,6 @@ class Ui_SignupPage(object):
                 self.retypePassword.clear()
 
         return checked
-            
 
     def signUp(self):
         # enters the users data into the database, signing them up
@@ -255,8 +246,6 @@ class Ui_SignupPage(object):
         conn.commit()
 
         self.showNext()
-
-        
 
     def hashPass(self, password):
         password = str(password)
