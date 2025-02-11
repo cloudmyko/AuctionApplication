@@ -22,8 +22,5 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = MainWindow()
     widget.show()
-
-    widget.ui.commandLinkButton.clicked.connect(widget.close)
-    widget.ui.submit.clicked.connect(widget.close)
     
     sys.exit(app.exec())

@@ -18,7 +18,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow,
     QMenu, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QWidget, QCommandLinkButton)
+    QStatusBar, QWidget, QCommandLinkButton, QMessageBox)
 
 import sqlite3 as sqlite
 from ui_search import Ui_HomePage as hp
@@ -167,8 +167,12 @@ class Ui_LoginPage(object):
                 print("logged in")
                 self.loggedIn = True
                 self.showNext()
-                
                 break
+
+        if self.loggedIn != True:
+            self.alert = QMessageBox()
+            self.alert.setText("Incorrect Login/Password")
+            self.alert.exec()
 
 
 

@@ -18,7 +18,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow,
     QMenu, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QWidget)
+    QStatusBar, QWidget, QMessageBox)
 
 import sqlite3 as sq
 from ui_search import Ui_HomePage as hp
@@ -176,6 +176,9 @@ class Ui_SignupPage(object):
         for i in range(len(allEntries)):
             if (username + email) == ''.join(allEntries[i]):
                 print("already in users")
+                self.alert = QMessageBox()
+                self.alert.setText("already in users")
+                self.alert.exec()
                 print(''.join(allEntries[i]))
                 return False
             print(allEntries[i])
@@ -190,12 +193,16 @@ class Ui_SignupPage(object):
             if self.errorCheck() == True:
                 self.signUp()
         else:
-            print("not signing you up")
+            self.alert = QMessageBox()
+            self.alert.setText("This username is not unique, change it.")
+            self.alert.exec()
     
     def errorCheck(self):
         checked = False
         username = self.enterUsername.text()
         password = self.enterPassword.text()
+        retypedPassword = self.retypePassword.text()
+
         present = False
         conn = sq.connect('auctionhouse.db')
         curs = conn.cursor()
@@ -204,7 +211,6 @@ class Ui_SignupPage(object):
 
         curs.execute(sql)
         allEntries = curs.fetchall()
-
         for i in range(len(allEntries)):
             if (username + password) == ''.join(allEntries[i]):
                 print(allEntries[i])
@@ -212,13 +218,24 @@ class Ui_SignupPage(object):
                 break
                 
         if not checked:
+            if retypedPassword != password:
+                self.alert = QMessageBox()
+                self.alert.setText("Your Passwords Do Not Match")
+                self.alert.exec()
+
+                checked = False
+                return checked
+
             if (len(username) >= 6 and len(password) >= 8) and present == False:
                 print("signing you up")
                 checked = True
             elif (len(username) < 6 or len(password) < 8):
                 print("your password/username isn't long enough\nusername min. 6 chars\npassword min. 8 chars ")
+                self.alert = QMessageBox()
+                self.alert.setText("username min. 6 chars\npassword min. 8 chars")
                 self.enterPassword.clear()
                 self.retypePassword.clear()
+                self.alert.exec()
             else:
                 print("invalid login")
                 self.enterPassword.clear()

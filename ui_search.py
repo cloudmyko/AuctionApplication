@@ -80,4 +80,3 @@ class Ui_HomePage(object):
         self.menuHelp.setTitle(QCoreApplication.translate("HomePage", u"Help", None))
         self.menuStaff_Login.setTitle(QCoreApplication.translate("HomePage", u"Staff Login", None))
     # retranslateUi
-
